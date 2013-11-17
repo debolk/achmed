@@ -15,6 +15,9 @@ function update_status()
         type: 'GET',
         dataType: 'JSON',
         success: function(result){
+            // Update position
+            $('.position').val(result.position).attr('max', result.duration);
+
             // Get the location of the current song
             $.ajax({
                 url: result.url,
