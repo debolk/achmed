@@ -1,11 +1,26 @@
 $(document).ready(function(){
-    update_status();
-
-    $('.previous', '.controls').on('click', previous);
-    $('.next', '.controls').on('click', next);
-    $('.pause', '.controls').on('click', pause);
-    $('.play', '.controls').on('click', play);
+    check_connectivity();
 });
+
+function check_connectivity()
+{
+    $.ajax({
+        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/status',
+        success: function(){
+            // Start the interface
+            update_status();
+            $('.previous', '.controls').on('click', previous);
+            $('.next', '.controls').on('click', next);
+            $('.pause', '.controls').on('click', pause);
+            $('.play', '.controls').on('click', play);
+        },
+        error: function() {
+            // Show error, stop working
+            $('.achmed').hide();
+            $('.error').show();
+        },
+    });
+}
 
 function update_status()
 {
