@@ -18,13 +18,16 @@ function update_playlist()
         success: function(result) {
             $('.playlist').html('');
             $(result.items).each(function(){
-                $('<li>').text(this.location).appendTo('.playlist');
+                var item = $('<li>').text(this.location).appendTo('.playlist');
+                if (this.url == $('.current-song').attr('data-url')) {
+                    item.addClass('current');
+                }
             });
         },        
     });
 
-    // Do this every ten seconds
-    setTimeout(update_playlist, 10000);
+    // Do this every three seconds
+    setTimeout(update_playlist, 3000);
 }
 
 function update_status()
@@ -37,6 +40,9 @@ function update_status()
         success: function(result){
             // Update position
             $('.position').val(result.position).attr('max', result.duration);
+
+            // Store URL of the song
+            $('.current-song').attr('data-url', result.url);
 
             // Get the location of the current song
             $.ajax({
@@ -56,12 +62,12 @@ function update_status()
                             dataType: 'JSON',
                             success: function(result) {
                                 // Update the interface
-                                $('.current').text(result.artist+' - '+result.title);
+                                $('.current-song').text(result.artist+' - '+result.title);
                             },
                         });
                     }
                     else {
-                        $('.current').text('Unable to determine current song');
+                        $('.current-song').text('Unable to determine current song');
                     }
                 },
             });
