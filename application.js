@@ -1,11 +1,31 @@
 $(document).ready(function(){
     update_status();
 
+    update_playlist();
+
     $('.previous', '.controls').on('click', previous);
     $('.next', '.controls').on('click', next);
     $('.pause', '.controls').on('click', pause);
     $('.play', '.controls').on('click', play);
 });
+
+function update_playlist()
+{
+    // Updates the playlist
+    $.ajax({
+        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/playlist',
+        method: 'GET',
+        success: function(result) {
+            $('.playlist').html('');
+            $(result.items).each(function(){
+                $('<li>').text(this.location).appendTo('.playlist');
+            });
+        },        
+    });
+
+    // Do this every ten seconds
+    setTimeout(update_playlist, 10000);
+}
 
 function update_status()
 {
