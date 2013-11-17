@@ -20,3 +20,8 @@ button {
 .progress {
     margin-bottom: 1em;
 }
+
+.introduction {
+    margin-top: -1em;
+    font-style: italic;
+}
