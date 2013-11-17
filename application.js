@@ -9,13 +9,39 @@ $(document).ready(function(){
 
 function update_status()
 {
-    // Update status in the interface
+    // Get the currently playing song
     $.ajax({
-        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/status',
+        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/current',
         type: 'GET',
         dataType: 'JSON',
         success: function(result){
-            $('.status').text(result.status);
+            // Get the location of the current song
+            $.ajax({
+                url: result.url,
+                type: 'GET',
+                dataType: 'JSON',
+                success: function(result) {
+                    // Process the location of the file
+                    var file = result.location;
+                    if (file.indexOf('/pub/mp3//') === 0) {
+                        file = file.substr(10);
+                        
+                        // Get the file meta-data
+                        $.ajax({
+                            url: 'http://musicbrainz.i.bolkhuis.nl/plugin/file/files/browse/'+file,
+                            type: 'GET',
+                            dataType: 'JSON',
+                            success: function(result) {
+                                // Update the interface
+                                $('.current').text(result.artist+' - '+result.title);
+                            },
+                        });
+                    }
+                    else {
+                        $('.current').text('Unable to determine current song');
+                    }
+                },
+            });
         },
     });
 
