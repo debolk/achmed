@@ -1,7 +1,10 @@
 $(document).ready(function(){
     update_status();
 
-    $('.controls').on('click', 'button', set_status);
+    $('.previous', '.controls').on('click', previous);
+    $('.next', '.controls').on('click', next);
+    $('.pause', '.controls').on('click', pause);
+    $('.play', '.controls').on('click', play);
 });
 
 function update_status()
@@ -20,18 +23,32 @@ function update_status()
     setTimeout(update_status, 1000);
 }
 
-function set_status(event)
+function previous()
 {
-    event.preventDefault();
+    send_ajax('POST', '/current', {action: 'previous'});
+}
 
-    // Get desired status
-    var status = $(this).attr('data-action');
+function next()
+{
+    send_ajax('POST', '/current', {action: 'next'});
+}
 
-    // Update server
+function pause()
+{
+    send_ajax('PUT', '/status', {status: 'paused'});
+}
+
+function play()
+{
+    send_ajax('PUT', '/status', {status: 'playing'});
+}
+
+function send_ajax(method, endpoint, data)
+{
     $.ajax({
-        type: 'POST',
-        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/status',
-        data: JSON.stringify({status: status}),
-        contentType: 'JSON',
+        type: method,
+        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos'+endpoint,
+        data: JSON.stringify(data),
+        contentType: 'application/json',
     });
 }
