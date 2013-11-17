@@ -40,6 +40,14 @@ function update_status()
         success: function(result){
             // Update position
             $('.position').val(result.position).attr('max', result.duration);
+            var pos_minutes = Math.floor(result.position / 60)
+            var pos_seconds = result.position % 60;
+            var dur_minutes = Math.floor(result.duration / 60);
+            var dur_seconds = result.duration % 60;
+            $('.pos_minutes').text(pos_minutes);
+            $('.pos_seconds').text(pos_seconds >= 10 ? (pos_seconds) : ('0' + pos_seconds));
+            $('.dur_minutes').text(dur_minutes);
+            $('.dur_seconds').text(dur_seconds >= 10 ? (dur_seconds) : ('0' + dur_seconds));
 
             // Store URL of the song
             $('.current-song').attr('data-url', result.url);
