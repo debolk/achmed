@@ -5,7 +5,18 @@ $(document).ready(function(){
     $('.next', '.controls').on('click', next);
     $('.pause', '.controls').on('click', pause);
     $('.play', '.controls').on('click', play);
+
+    $('.achmed').on('click', use_achmed_theme)
 });
+
+function use_achmed_theme(event)
+{
+    event.preventDefault();
+    $('.previous').text('Oh crap, not again.');
+    $('.next').text('You offend the other infidels');
+    $('.pause').text('Silence! I keel you!');
+    $('.play').text('I\'m trying to offend as many infidels as possible');
+}
 
 function update_status()
 {
