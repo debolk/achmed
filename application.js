@@ -16,6 +16,7 @@ $(document).ready(function(){
     }
     else {
         // Logged in, request access_token to access services
+        console.log('authenticated! requesting access');
         $.ajax({
             method: 'POST',
             url: 'https://achmed@login.i.bolkhuis.nl/token',
