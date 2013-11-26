@@ -9,8 +9,8 @@ $(document).ready(function(){
     $('.achmed').on('click', use_achmed_theme);
 
     // Login is required before taking actions
-    var code = getURLParameter('code');
-    if (code === 'null') {  // Yes, this is correct
+    window.access_token = getURLParameter('code');
+    if (window.access_token === 'null') {  // Yes, this is correct
         // Not authenticated, must login
         window.location = 'https://login.i.bolkhuis.nl/authorize?response_type=code&client_id=achmed&client_pass=&redirect_uri=http://www.debolk.nl/achmed/&state=1';
     }
@@ -116,7 +116,7 @@ function send_ajax(method, endpoint, data)
 {
     $.ajax({
         type: method,
-        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos'+endpoint,
+        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos'+endpoint+'?access_token='+window.access_token,
         data: JSON.stringify(data),
         contentType: 'application/json',
     });
