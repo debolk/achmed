@@ -25,3 +25,7 @@ button {
     margin-top: -1em;
     font-style: italic;
 }
+
+.picture {
+    display: none;
+}

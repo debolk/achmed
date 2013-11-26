@@ -61,6 +61,7 @@ function use_achmed_theme(event)
     $('.next').text('You offend the other infidels');
     $('.pause').text('Silence! I keel you!');
     $('.play').text('I\'m trying to offend as many infidels as possible');
+    $('.picture').show();
 }
 
 function update_status()
