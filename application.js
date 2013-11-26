@@ -19,7 +19,7 @@ $(document).ready(function(){
         console.log('authenticated! requesting access');
         $.ajax({
             method: 'POST',
-            url: 'https://login.i.bolkhuis.nl/token',
+            url: 'https://login.i.bolkhuis.nl/token?redirect_uri=http://www.debolk.nl/achmed/',
             data: {grant_type: 'authorization_code', code: authorization_token},
             success: function(result){
                 //FIXME
