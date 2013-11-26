@@ -19,8 +19,8 @@ $(document).ready(function(){
         console.log('authenticated! requesting access');
         $.ajax({
             method: 'POST',
-            url: 'https://login.i.bolkhuis.nl/token?redirect_uri=http://www.debolk.nl/achmed/',
-            data: {grant_type: 'authorization_code', code: authorization_token},
+            url: 'https://login.i.bolkhuis.nl/token',
+            data: {grant_type: 'authorization_code', code: authorization_token, redirect_uri: 'http://www.debolk.nl/achmed/'},
             success: function(result){
                 //FIXME
             },
