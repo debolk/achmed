@@ -9,10 +9,24 @@ $(document).ready(function(){
     $('.achmed').on('click', use_achmed_theme);
 
     // Login is required before taking actions
-    window.access_token = getURLParameter('code');
-    if (window.access_token === 'null') {  // Yes, this is correct
+    var authorization_token = getURLParameter('code');
+    if (authorization_token === 'null') {  // Yes, this is correct
         // Not authenticated, must login
         window.location = 'https://login.i.bolkhuis.nl/authorize?response_type=code&client_id=achmed&client_pass=&redirect_uri=http://www.debolk.nl/achmed/&state=1';
+    }
+    else {
+        // Logged in, request access_token to access services
+        $.ajax({
+            method: 'POST',
+            url: 'https://achmed@login.i.bolkhuis.nl/token',
+            data: {grant_type: 'authorization_code', code: authorization_token},
+            success: function(result){
+                //FIXME
+            },
+            error: function(){
+                //FIXME
+            },
+        });
     }
 });
 
