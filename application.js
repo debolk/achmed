@@ -19,6 +19,7 @@ $(document).ready(function(){
         $.ajax({
             method: 'POST',
             url: 'https://login.i.bolkhuis.nl/token',
+            dataType: 'JSON',
             data: {
                 grant_type: 'authorization_code',
                 code: authorization_token,
@@ -27,10 +28,12 @@ $(document).ready(function(){
                 client_secret: '',
             },
             success: function(result){
-                //FIXME
+                window.access_token = result.access_token;
+                // Clear the browser URL for cleaner reloads
+                history.pushState(null, '', 'http://www.debolk.nl/achmed/');
             },
-            error: function(){
-                //FIXME
+            error: function(result){
+                $('body').html(result + "Please reload.");
             },
         });
     }
