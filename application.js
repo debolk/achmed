@@ -6,8 +6,21 @@ $(document).ready(function(){
     $('.pause', '.controls').on('click', pause);
     $('.play', '.controls').on('click', play);
 
-    $('.achmed').on('click', use_achmed_theme)
+    $('.achmed').on('click', use_achmed_theme);
+
+    // Login is required before taking actions
+    var code = getURLParameter('code');
+    if (code === 'null') {  // Yes, this is correct
+        // Not authenticated, must login
+        window.location = 'https://login.i.bolkhuis.nl/authorize?response_type=code&client_id=achmed&client_pass=&redirect_uri=http://www.debolk.nl/achmed/&state=1';
+    }
 });
+
+function getURLParameter(name) {
+    return decodeURI(
+        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    );
+}
 
 function use_achmed_theme(event)
 {
