@@ -16,11 +16,16 @@ $(document).ready(function(){
     }
     else {
         // Logged in, request access_token to access services
-        console.log('authenticated! requesting access');
         $.ajax({
             method: 'POST',
             url: 'https://login.i.bolkhuis.nl/token',
-            data: {grant_type: 'authorization_code', code: authorization_token, redirect_uri: 'http://www.debolk.nl/achmed/'},
+            data: {
+                grant_type: 'authorization_code',
+                code: authorization_token,
+                redirect_uri: 'http://www.debolk.nl/achmed/',
+                client_id: 'achmed',
+                client_secret: '',
+            },
             success: function(result){
                 //FIXME
             },
