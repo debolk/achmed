@@ -31,6 +31,15 @@ $(document).ready(function(){
                 window.access_token = result.access_token;
                 // Clear the browser URL for cleaner reloads
                 history.pushState(null, '', 'http://www.debolk.nl/achmed/');
+
+                // Check for authorization
+                $.ajax({
+                    method: 'GET',
+                    url: 'https://login.i.bolkhuis.nl/mp3control?access_token='+window.access_token,
+                    success: function(result) {
+                        $('button').removeAttr('disabled');
+                    }
+                });
             },
             error: function(result){
                 $('body').html(result + "Please reload.");
