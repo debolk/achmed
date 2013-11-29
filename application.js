@@ -91,6 +91,9 @@ function mandatory_enlightement(event)
                         // Press previous
                         send_ajax('POST', '/current', {action: 'previous'});
                     },
+                    done: function() {
+                        alert('done');
+                    },
                 });
             }
             else {
