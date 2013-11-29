@@ -57,7 +57,8 @@ function check_device_status()
         method: 'GET',
         url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/bolkpc9/status',
         success: function(result){
-            if (result == 'null') {
+            console.log(result);
+            if (result === null) {
                 notify('error', 'Cannot reach device');
             }
         },
