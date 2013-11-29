@@ -99,7 +99,7 @@ function mandatory_enlightement(event)
                     type: method,
                     url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/playlist?access_token='+window.access_token,
                     data: JSON.stringify({uri: song}),
-                    contentType: 'application/json',
+                    dataType: 'JSON',
                 });
 
                 // Press play
