@@ -212,5 +212,5 @@ function send_ajax(method, endpoint, data)
 function notify(code, message)
 {
     $('.notifications').html('');
-    $('<div>').addClass('notification error').text(message).appendTo('.notifications');
+    $('<div>').addClass('notification').addClass(code).text(message).appendTo('.notifications');
 }
