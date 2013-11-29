@@ -33,5 +33,25 @@ button {
 
 .notification {
     padding: 1em;
-
+    border-radius: 1em;
+}
+.notification.error {
+    background-color: #DFF0D8;
+    border-color: #D6E9C6;
+    color: #468847;
+}
+.notification.success {
+    background-color: #F2DEDE;
+    border-color: #EBCCD1;
+    color: #B94A48;
+}
+.notification.info {
+    background-color: #D9EDF7;
+    border-color: #BCE8F1;
+    color: #3A87AD;
+}
+.notification.warning {
+    background-color: #FCF8E3;
+    border-color: #FAEBCC;
+    color: #C09853;
 }
