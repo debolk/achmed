@@ -25,3 +25,13 @@ button {
     margin-top: -1em;
     font-style: italic;
 }
+
+/* Notifications */
+.notifications {
+    margin-bottom: 1em;
+}
+
+.notification {
+    padding: 1em;
+
+}

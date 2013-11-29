@@ -1,4 +1,7 @@
 $(document).ready(function(){
+    // Check for availability
+    check_device_status();
+
     update_status();
 
     $('.previous', '.controls').on('click', previous);
@@ -47,6 +50,19 @@ $(document).ready(function(){
         });
     }
 });
+
+function check_device_status()
+{
+    $.ajax({
+        method: 'GET',
+        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/bolkpc9/status',
+        success: function(result){
+            if (result == 'null') {
+                notify('error', 'Cannot reach device');
+            }
+        },
+    });
+}
 
 function mandatory_enlightement(event)
 {
@@ -107,11 +123,6 @@ function update_status()
             notify('error', 'Cannot reach mp3bak');
         },
         success: function(result){
-            // Check if the device is online and available
-            if ($.isEmptyObject(result)) {
-                notify('error', ' Cannot reach mp3bak');
-            }
-
             // Update position
             update_current_song_interface(result.position, result.duration);
 
