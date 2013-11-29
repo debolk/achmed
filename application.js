@@ -6,8 +6,6 @@ $(document).ready(function(){
     $('.pause', '.controls').on('click', pause);
     $('.play', '.controls').on('click', play);
 
-    $('.achmed').on('click', use_achmed_theme);
-
     // Login is required before taking actions
     var authorization_token = getURLParameter('code');
     if (authorization_token === 'null') {  // Yes, this is correct
@@ -52,16 +50,6 @@ function getURLParameter(name) {
     return decodeURI(
         (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
     );
-}
-
-function use_achmed_theme(event)
-{
-    event.preventDefault();
-    $('.previous').text('Oh crap, not again.');
-    $('.next').text('You offend the other infidels');
-    $('.pause').text('Silence! I keel you!');
-    $('.play').text('I\'m trying to offend as many infidels as possible');
-    $('.picture').show();
 }
 
 function update_status()
