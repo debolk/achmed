@@ -55,7 +55,7 @@ function check_device_status()
 {
     $.ajax({
         method: 'GET',
-        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/bolkpc9/status',
+        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/status',
         error: function() {
             notify('error', 'Cannot reach device');
         },
