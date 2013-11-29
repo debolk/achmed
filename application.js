@@ -103,7 +103,17 @@ function update_status()
         url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/current',
         type: 'GET',
         dataType: 'JSON',
+        error: function() {
+            notify('error', 'Cannot reach mp3bak');
+        }
         success: function(result){
+            // Check if the device is online and available
+            console.log('x');
+            console.log(result);
+            if (result == {}) {
+                notify('error', ' Cannot reach mp3bak');
+            }
+
             // Update position
             update_current_song_interface(result.position, result.duration);
 
@@ -185,4 +195,10 @@ function send_ajax(method, endpoint, data)
         data: JSON.stringify(data),
         contentType: 'application/json',
     });
+}
+
+function notify(code, message)
+{
+    $('.notifications').html('');
+    $('<div>').addClass('notification error').text(message).appendTo('.notifications');
 }
