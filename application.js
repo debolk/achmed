@@ -6,6 +6,8 @@ $(document).ready(function(){
     $('.pause', '.controls').on('click', pause);
     $('.play', '.controls').on('click', play);
 
+    $('.enlightement').on('click', mandatory_enlightement);
+
     // Login is required before taking actions
     var authorization_token = getURLParameter('code');
     if (authorization_token === 'null') {  // Yes, this is correct
@@ -45,6 +47,35 @@ $(document).ready(function(){
         });
     }
 });
+
+function mandatory_enlightement()
+{
+    var song = 'http://musicbrainz.i.bolkhuis.nl//plugin/file/files/browse/Artists/Parov Stelar/Coco/0101 - Coco.mp3'
+    
+    // Get current song
+    $.ajax({
+        method: 'GET',
+        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/current'
+        dataType: 'JSON',
+        success: function(result) {
+            // Determine if there's music playing (the playlist is not empty)
+            if (result != {}) {
+                // Prepend song to current song
+                send_ajax('POST', '/playlist/'+result.url, {uri: song});
+                
+                // Press previous
+                send_ajax('POST', '/current', {action: 'previous'});
+            }
+            else {
+                // Append song to playlist
+                send_ajax('POST', '/playlist', {uri: song});
+
+                // Press play
+                send_ajax('PUT', '/status', {status: 'playing'});
+            }
+        },
+    });
+}
 
 function getURLParameter(name) {
     return decodeURI(
