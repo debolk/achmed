@@ -108,7 +108,7 @@ function update_status()
         },
         success: function(result){
             // Check if the device is online and available
-            if ($(result).isEmptyObject()) {
+            if ($.isEmptyObject(result)) {
                 notify('error', ' Cannot reach mp3bak');
             }
 
