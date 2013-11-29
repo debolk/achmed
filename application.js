@@ -57,7 +57,7 @@ function mandatory_enlightement(event)
     // Get current song
     $.ajax({
         method: 'GET',
-        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/current'
+        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/current',
         dataType: 'JSON',
         success: function(result) {
             // Determine if there's music playing (the playlist is not empty)
