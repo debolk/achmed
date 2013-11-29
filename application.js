@@ -63,7 +63,12 @@ function mandatory_enlightement(event)
             // Determine if there's music playing (the playlist is not empty)
             if (result != {}) {
                 // Prepend song to current song
-                send_ajax('POST', '/playlist/'+result.url, {uri: song});
+                $.ajax({
+                    method: 'POST',
+                    url: result.url,
+                    dataType: 'JSON',
+                    data: {uri: song},
+                });
                 
                 // Press previous
                 send_ajax('POST', '/current', {action: 'previous'});
