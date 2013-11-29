@@ -48,8 +48,10 @@ $(document).ready(function(){
     }
 });
 
-function mandatory_enlightement()
+function mandatory_enlightement(event)
 {
+    event.preventDefault();
+
     var song = 'http://musicbrainz.i.bolkhuis.nl//plugin/file/files/browse/Artists/Parov Stelar/Coco/0101 - Coco.mp3'
     
     // Get current song
