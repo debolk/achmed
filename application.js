@@ -96,14 +96,15 @@ function mandatory_enlightement(event)
             else {
                 // Append song to playlist
                 $.ajax({
-                    type: method,
+                    method: 'POST',
                     url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/playlist?access_token='+window.access_token,
-                    data: JSON.stringify({uri: song}),
                     dataType: 'JSON',
+                    data: JSON.stringify({uri: song}),
+                    success: function() {
+                        // Press play
+                        send_ajax('PUT', '/status', {status: 'playing'});
+                    },
                 });
-
-                // Press play
-                send_ajax('PUT', '/status', {status: 'playing'});
             }
         },
     });
