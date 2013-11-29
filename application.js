@@ -105,10 +105,9 @@ function update_status()
         dataType: 'JSON',
         error: function() {
             notify('error', 'Cannot reach mp3bak');
-        }
+        },
         success: function(result){
             // Check if the device is online and available
-            console.log('x');
             console.log(result);
             if (result == {}) {
                 notify('error', ' Cannot reach mp3bak');
