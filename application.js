@@ -80,7 +80,7 @@ function mandatory_enlightement(event)
         dataType: 'JSON',
         success: function(result) {
             // Determine if there's music playing (the playlist is not empty)
-            if (result != {}) {
+            if (! $.isEmptyObject(result)) {
                 // Prepend song to current song
                 $.ajax({
                     method: 'POST',
