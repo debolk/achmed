@@ -1,6 +1,4 @@
 $(document).ready(function(){
-    alert(Achmed.config.app_url);
-
     // Check for availability
     check_device_status();
 
