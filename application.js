@@ -17,7 +17,7 @@ $(document).ready(function(){
     var authorization_token = getURLParameter('code');
     if (authorization_token === 'null') {  // Yes, this is correct
         // Not authenticated, must login
-        window.location = 'https://login.i.bolkhuis.nl/authorize?response_type=code&client_id=achmed&client_pass=&redirect_uri=http://www.debolk.nl/achmed/&state=1';
+        window.location = 'https://login.i.bolkhuis.nl/authorize?response_type=code&client_id=achmed&client_pass=&redirect_uri='+Achmed.config.app_url+'&state=1';
     }
     else {
         // Logged in, request access_token to access services
@@ -28,14 +28,14 @@ $(document).ready(function(){
             data: {
                 grant_type: 'authorization_code',
                 code: authorization_token,
-                redirect_uri: 'http://www.debolk.nl/achmed/',
+                redirect_uri: Achmed.config.app_url,
                 client_id: 'achmed',
                 client_secret: '',
             },
             success: function(result){
                 window.access_token = result.access_token;
                 // Clear the browser URL for cleaner reloads
-                history.pushState(null, '', 'http://www.debolk.nl/achmed/');
+                history.pushState(null, '', Achmed.config.app_url);
 
                 // Check for authorization
                 $.ajax({
