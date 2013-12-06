@@ -137,12 +137,9 @@ function update_status()
                 // Update position
                 update_current_song_interface(result.position, result.duration);
 
-                // Store URL for later reference
-                var current_song_url = result.url;
-
                 // Get the location of the current song
                 $.ajax({
-                    url: current_song_url,
+                    url: result.url,
                     type: 'GET',
                     dataType: 'JSON',
                     success: function(result) {
