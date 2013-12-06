@@ -89,11 +89,7 @@ function mandatory_enlightement(event)
                     data: JSON.stringify({uri: song}),
                     success: function() {
                         // Press previous
-                        alert('Pressing previous');
                         send_ajax('POST', '/current', {action: 'previous'});
-                    },
-                    done: function() {
-                        alert('done');
                     },
                 });
             }
@@ -106,7 +102,6 @@ function mandatory_enlightement(event)
                     data: JSON.stringify({uri: song}),
                     success: function() {
                         // Press play
-                        alert('Pressing play');
                         send_ajax('PUT', '/status', {status: 'playing'});
                     },
                 });
