@@ -158,20 +158,25 @@ function update_status()
                                 dataType: 'JSON',
                                 success: function(result) {
                                     // Update the interface
-                                    var artist = result.artist != '' ? result.artist : 'Unknown artist' ;
-                                    var title = result.title != '' ? result.title : 'Unknown song' ;
-                                    $('.current-song').text(artist + ' - '+ title);
+
+                                    // Check if we have ID3-tags
+                                    if (result.artist != '' && result.title != '') {
+                                        $('.current-song').text(result.artist + ' - '+ result.title);
+                                    }
+                                    else {
+                                        // Fallback option: display filename
+                                        var pieces = current_song_url.split('/');
+                                        var name = pieces[pieces.length - 1];
+                                        if (name.length == 0) {
+                                            name = 'Unable to determine current song';
+                                        }
+                                        $('.current-song').text(name);
+                                    }
                                 },
                             });
                         }
                         else {
-                            // Fallback option: display filename
-                            var pieces = current_song_url.split('/');
-                            var name = pieces[pieces.length - 1];
-                            if (name.length == 0) {
-                                name = 'Unable to determine current song';
-                            }
-                            $('.current-song').text(name);
+                            $('.current-song').text('Unable to determine current song');
                         }
                     },
                 });
