@@ -154,7 +154,7 @@ function update_status()
                             dataType: 'JSON',
                             success: function(result) {
                                 // Update the interface
-                                var artist = result.artist != '' ? result.artist : 'Onbekend artiest' ;
+                                var artist = result.artist != '' ? result.artist : 'Onbekende artiest' ;
                                 var title = result.title != '' ? result.title : 'Onbekend nummer' ;
                                 $('.current-song').text(artist + ' - '+ title);
                             },
