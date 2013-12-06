@@ -71,7 +71,7 @@ function mandatory_enlightement(event)
 {
     event.preventDefault();
 
-    var song = 'http://musicbrainz.i.bolkhuis.nl//plugin/file/files/browse/Artists/Parov Stelar/Coco/0101 - Coco.mp3'
+    var song = "http://musicbrainz.i.bolkhuis.nl//plugin/file/files/browse///Uploads/Tagged/Matthew Wilder//Disney's Greatest, Volume 2//I'll Make a Man Out of You (feat. Donny Osmond) (Mulan).mp3";
     
     // Get current song
     $.ajax({
