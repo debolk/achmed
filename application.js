@@ -165,7 +165,7 @@ function update_status()
                                     }
                                     else {
                                         // Fallback option: display filename
-                                        var pieces = current_song_url.split('/');
+                                        var pieces = file.split('/');
                                         var name = pieces[pieces.length - 1];
                                         if (name.length == 0) {
                                             name = 'Unable to determine current song';
