@@ -127,20 +127,18 @@ function update_status()
         type: 'GET',
         dataType: 'JSON',
         error: function() {
-            notify('error', 'Cannot reach mp3bak');
+            notify('error', 'Cannot reach the music computer. It might be turned off.');
         },
         success: function(result){
             if ($.isEmptyObject(result)) {
-                // No current song
+                // No song currently playing, clear the interface
                 $('.current-song').text('No current song');
+                $('.position').val(0);
                 $('.pos_minutes, .pos_seconds, .dur_minutes, .dur_seconds').text('00');
             }
             else {
                 // Update position
                 update_current_song_interface(result.position, result.duration);
-
-                // Store URL of the song
-                $('.current-song').attr('data-url', result.url);
 
                 // Get the location of the current song
                 $.ajax({
