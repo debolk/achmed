@@ -134,43 +134,44 @@ function update_status()
                 // No current song
                 $('.current-song').text('No current song');
                 $('.pos_minutes, .pos_seconds, .dur_minutes, .dur_seconds').text('00');
-                return;
             }
-            // Update position
-            update_current_song_interface(result.position, result.duration);
+            else {
+                // Update position
+                update_current_song_interface(result.position, result.duration);
 
-            // Store URL of the song
-            $('.current-song').attr('data-url', result.url);
+                // Store URL of the song
+                $('.current-song').attr('data-url', result.url);
 
-            // Get the location of the current song
-            $.ajax({
-                url: result.url,
-                type: 'GET',
-                dataType: 'JSON',
-                success: function(result) {
-                    // Process the location of the file
-                    var file = result.location;
-                    if (file.indexOf('/pub/mp3//') === 0) {
-                        file = file.substr(10);
-                        
-                        // Get the file meta-data
-                        $.ajax({
-                            url: 'http://musicbrainz.i.bolkhuis.nl/plugin/file/files/browse/'+file,
-                            type: 'GET',
-                            dataType: 'JSON',
-                            success: function(result) {
-                                // Update the interface
-                                var artist = result.artist != '' ? result.artist : 'Unknown artist' ;
-                                var title = result.title != '' ? result.title : 'Unknown song' ;
-                                $('.current-song').text(artist + ' - '+ title);
-                            },
-                        });
-                    }
-                    else {
-                        $('.current-song').text('Unable to determine current song');
-                    }
-                },
-            });
+                // Get the location of the current song
+                $.ajax({
+                    url: result.url,
+                    type: 'GET',
+                    dataType: 'JSON',
+                    success: function(result) {
+                        // Process the location of the file
+                        var file = result.location;
+                        if (file.indexOf('/pub/mp3//') === 0) {
+                            file = file.substr(10);
+                            
+                            // Get the file meta-data
+                            $.ajax({
+                                url: 'http://musicbrainz.i.bolkhuis.nl/plugin/file/files/browse/'+file,
+                                type: 'GET',
+                                dataType: 'JSON',
+                                success: function(result) {
+                                    // Update the interface
+                                    var artist = result.artist != '' ? result.artist : 'Unknown artist' ;
+                                    var title = result.title != '' ? result.title : 'Unknown song' ;
+                                    $('.current-song').text(artist + ' - '+ title);
+                                },
+                            });
+                        }
+                        else {
+                            $('.current-song').text('Unable to determine current song');
+                        }
+                    },
+                });
+            }
         },
     });
 
