@@ -137,9 +137,12 @@ function update_status()
                 // Update position
                 update_current_song_interface(result.position, result.duration);
 
+                // Store URL for later reference
+                var current_song_url = result.url;
+
                 // Get the location of the current song
                 $.ajax({
-                    url: result.url,
+                    url: current_song_url,
                     type: 'GET',
                     dataType: 'JSON',
                     success: function(result) {
@@ -162,7 +165,13 @@ function update_status()
                             });
                         }
                         else {
-                            $('.current-song').text('Unable to determine current song');
+                            // Fallback option: display filename
+                            var pieces = current_song_url.split('/');
+                            var name = pieces[pieces.length - 1];
+                            if (name.length == 0) {
+                                name = 'Unable to determine current song';
+                            }
+                            $('.current-song').text(name);
                         }
                     },
                 });
