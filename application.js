@@ -130,7 +130,7 @@ function update_status()
             notify('error', 'Cannot reach mp3bak');
         },
         success: function(result){
-            if $.isEmptyObject(result) {
+            if ($.isEmptyObject(result)) {
                 // No current song
                 $('.current-song').text('No current song');
                 $('.pos_minutes, .pos_seconds, .dur_minutes, .dur_seconds').text('00');
