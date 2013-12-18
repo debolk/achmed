@@ -9,8 +9,6 @@ $(document).ready(function(){
     $('.pause', '.controls').on('click', pause);
     $('.play', '.controls').on('click', play);
 
-    $('.enlightement').on('click', mandatory_enlightement);
-
     // Login is required before taking actions
     var authorization_token = getURLParameter('code');
     if (authorization_token === 'null') {  // Yes, this is correct
@@ -62,49 +60,6 @@ function check_device_status()
         success: function(result){
             if (result === null) {
                 notify('error', 'Cannot reach device');
-            }
-        },
-    });
-}
-
-function mandatory_enlightement(event)
-{
-    event.preventDefault();
-
-    var song = "http://musicbrainz.i.bolkhuis.nl//plugin/file/files/browse///Uploads/Tagged/Matthew Wilder//Disney's Greatest, Volume 2//I'll Make a Man Out of You (feat. Donny Osmond) (Mulan).mp3";
-    
-    // Get current song
-    $.ajax({
-        method: 'GET',
-        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/current',
-        dataType: 'JSON',
-        success: function(result) {
-            // Determine if there's music playing (the playlist is not empty)
-            if (! $.isEmptyObject(result)) {
-                // Prepend song to current song
-                $.ajax({
-                    method: 'POST',
-                    url: result.url+'?access_token='+window.access_token,
-                    dataType: 'JSON',
-                    data: JSON.stringify({uri: song}),
-                    success: function() {
-                        // Press previous
-                        send_ajax('POST', '/current', {action: 'previous'});
-                    },
-                });
-            }
-            else {
-                // Append song to playlist
-                $.ajax({
-                    method: 'POST',
-                    url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/playlist?access_token='+window.access_token,
-                    dataType: 'JSON',
-                    data: JSON.stringify({uri: song}),
-                    success: function() {
-                        // Press play
-                        send_ajax('PUT', '/status', {status: 'playing'});
-                    },
-                });
             }
         },
     });
