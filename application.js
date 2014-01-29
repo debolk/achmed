@@ -55,11 +55,11 @@ function check_device_status()
         method: 'GET',
         url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/status',
         error: function() {
-            notify('error', 'Cannot reach device');
+            notify('error', 'The music computer doesn\'t answer. It might be turned off.');
         },
         success: function(result){
             if (result === null) {
-                notify('error', 'Cannot reach device');
+                notify('error', 'The music computer doesn\'t answer. It might be turned off.');
             }
         },
     });
@@ -79,7 +79,7 @@ function update_status()
         type: 'GET',
         dataType: 'JSON',
         error: function() {
-            notify('error', 'Cannot reach the music computer. It might be turned off.');
+            notify('error', 'The music computer doesn\'t answer. It might be turned off.');
         },
         success: function(result){
             if ($.isEmptyObject(result)) {
