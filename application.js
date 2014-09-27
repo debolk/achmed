@@ -13,13 +13,18 @@ $(document).ready(function(){
     var authorization_token = getURLParameter('code');
     if (authorization_token === 'null') {  // Yes, this is correct
         // Not authenticated, must login
-        window.location = 'https://login.i.bolkhuis.nl/authorize?response_type=code&client_id=achmed&client_pass=&redirect_uri='+Achmed.config.app_url+'&state=1';
+        window.location = Achmed.config.oauth.endpoint 
+                                + 'authorize?response_type=code'
+                                + '&client_id=' + Achmed.config.oauth.client_id
+                                + '&client_pass=' + Achmed.config.oauth.client_pass
+                                + '&redirect_uri=' +Achmed.config.app_url
+                                + '&state=1';
     }
     else {
         // Logged in, request access_token to access services
         $.ajax({
             method: 'POST',
-            url: 'https://login.i.bolkhuis.nl/token',
+            url: Achmed.config.oauth.endpoint + 'token',
             dataType: 'JSON',
             data: {
                 grant_type: 'authorization_code',
@@ -36,7 +41,7 @@ $(document).ready(function(){
                 // Check for authorization
                 $.ajax({
                     method: 'GET',
-                    url: 'https://login.i.bolkhuis.nl/mp3control?access_token='+window.access_token,
+                    url: Achmed.config.oauth.endpoint + 'mp3control?access_token='+window.access_token,
                     success: function(result) {
                         $('button').removeAttr('disabled');
                     }
