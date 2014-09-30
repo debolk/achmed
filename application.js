@@ -32,8 +32,8 @@ $(document).ready(function(){
                 grant_type: 'authorization_code',
                 code: authorization_token,
                 redirect_uri: Achmed.config.app_url,
-                client_id: 'achmed',
-                client_secret: '',
+                client_id: Achmed.config.oauth.client_id,
+                client_secret: Achmed.config.oauth.client_pass,
             },
             success: function(result){
                 window.access_token = result.access_token;
