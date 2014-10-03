@@ -43,11 +43,13 @@ $(document).ready(function(){
                     },
                     error: function(result) {
                         notify('error', 'You\'re not allowed to use this');
+                        _trackEvent('authentication', 'failAuthorization');
                     }
                 });
             },
             error: function(result){
                 notify('error', 'Unknown fatal error occurred');
+                _trackEvent('error', 'unknown');
             },
         });
     }
@@ -60,10 +62,12 @@ function check_device_status()
         url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/status',
         error: function() {
             notify('error', 'The music computer doesn\'t answer. It might be turned off.');
+            _trackEvent('error', 'mp3computerUnreachable');
         },
         success: function(result){
             if (result === null) {
                 notify('error', 'The music computer doesn\'t answer. It might be turned off.');
+                _trackEvent('error', 'mp3computerUnreachable');
             }
         },
     });
@@ -78,11 +82,13 @@ function getURLParameter(name) {
 function pause()
 {
     send_ajax('PUT', '/status', {status: 'paused'});
+    _trackEvent('button', 'pause');
 }
 
 function play()
 {
     send_ajax('PUT', '/status', {status: 'playing'});
+    _trackEvent('button', 'play');
 }
 
 function send_ajax(method, endpoint, data)
