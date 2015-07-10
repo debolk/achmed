@@ -1,9 +1,16 @@
 $(document).ready(function(){
+
     // Check for availability
     check_device_status();
 
-    $('.pause', '.controls').on('click', pause);
-    $('.play', '.controls').on('click', play);
+    // Process clicks
+    $('.pause', '.controls').on('click', function(){
+        send_ajax('PUT', '/status', {status: 'paused'});
+    });
+
+    $('.play', '.controls').on('click', function() {
+        send_ajax('PUT', '/status', {status: 'playing'});
+    });
 
     // Login is required before taking actions
     var authorization_token = getAuthorisationCodeFromURL();
@@ -79,16 +86,6 @@ function getAuthorisationCodeFromURL() {
     else {
         return regex[1];
     }
-}
-
-function pause()
-{
-    send_ajax('PUT', '/status', {status: 'paused'});
-}
-
-function play()
-{
-    send_ajax('PUT', '/status', {status: 'playing'});
 }
 
 function send_ajax(method, endpoint, data)
