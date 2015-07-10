@@ -6,10 +6,10 @@ $(document).ready(function(){
     $('.play', '.controls').on('click', play);
 
     // Login is required before taking actions
-    var authorization_token = getURLParameter('code');
-    if (authorization_token === 'null') {  // Yes, this is correct
+    var authorization_token = getAuthorisationCodeFromURL();
+    if (authorization_token === null) {
         // Not authenticated, must login
-        window.location = Achmed.config.oauth.endpoint 
+        window.location = Achmed.config.oauth.endpoint
                                 + 'authorize?response_type=code'
                                 + '&client_id=' + Achmed.config.oauth.client_id
                                 + '&client_pass=' + Achmed.config.oauth.client_pass
@@ -19,16 +19,17 @@ $(document).ready(function(){
     else {
         // Logged in, request access_token to access services
         $.ajax({
-            method: 'POST',
+            type: 'POST',
             url: Achmed.config.oauth.endpoint + 'token',
-            dataType: 'JSON',
-            data: {
+            contentType: 'application/json',
+            dataType: 'json',
+            data: JSON.stringify({
                 grant_type: 'authorization_code',
                 code: authorization_token,
                 redirect_uri: Achmed.config.app_url,
                 client_id: Achmed.config.oauth.client_id,
                 client_secret: Achmed.config.oauth.client_pass,
-            },
+            }),
             success: function(result){
                 window.access_token = result.access_token;
                 // Clear the browser URL for cleaner reloads
@@ -36,7 +37,7 @@ $(document).ready(function(){
 
                 // Check for authorization
                 $.ajax({
-                    method: 'GET',
+                    type: 'GET',
                     url: Achmed.config.oauth.endpoint + 'mp3control?access_token='+window.access_token,
                     success: function(result) {
                         $('button').removeAttr('disabled');
@@ -58,7 +59,7 @@ $(document).ready(function(){
 function check_device_status()
 {
     $.ajax({
-        method: 'GET',
+        type: 'GET',
         url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/status',
         error: function() {
             notify('error', 'The music computer doesn\'t answer. It might be turned off.');
@@ -73,10 +74,15 @@ function check_device_status()
     });
 }
 
-function getURLParameter(name) {
-    return decodeURI(
-        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
-    );
+function getAuthorisationCodeFromURL() {
+    regex = RegExp(/code=(.+?)(\&|$)/).exec(location.search);
+
+    if (regex === null) {
+        return null;
+    }
+    else {
+        return regex[1];
+    }
 }
 
 function pause()
