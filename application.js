@@ -104,6 +104,7 @@ function send_ajax(method, endpoint, data)
         url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos'+endpoint+'?access_token='+window.access_token,
         data: JSON.stringify(data),
         contentType: 'application/json',
+        dataType: 'json'
     });
 }
 
