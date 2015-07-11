@@ -15,9 +15,15 @@ $(document).ready(function(){
     // Login is required before taking actions
     var authorization_token = getAuthorisationCodeFromURL();
     if (authorization_token === null) {
+        // Have we refused authentication before?
+        if (userhasRefused()) {
+            notify('error', 'You cannot use this without granting access to your account. Reload to try again.');
+            history.pushState(null, '', Achmed.config.app_url);
+            return;
+        }
         // Not authenticated, must login
         window.location = Achmed.config.oauth.endpoint
-                                + 'authorize?response_type=code'
+                                + 'authenticate?response_type=code'
                                 + '&client_id=' + Achmed.config.oauth.client_id
                                 + '&client_pass=' + Achmed.config.oauth.client_pass
                                 + '&redirect_uri=' +Achmed.config.app_url
@@ -86,6 +92,12 @@ function getAuthorisationCodeFromURL() {
     else {
         return regex[1];
     }
+}
+
+function userhasRefused()
+{
+    regex = RegExp(/error=access_denied/).exec(location.search);
+    return (regex !== null);
 }
 
 function send_ajax(method, endpoint, data)
