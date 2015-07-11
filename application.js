@@ -12,8 +12,6 @@ $(document).ready(function(){
         send_ajax('PUT', '/status', {status: 'playing'});
     });
 
-    $('#enlightenment').on('click', mandatory_enlightenment);
-
     // Login is required before taking actions
     var authorization_token = getAuthorisationCodeFromURL();
     if (authorization_token === null) {
@@ -105,59 +103,4 @@ function notify(code, message)
 {
     $('.notifications').html('');
     $('<div>').addClass('notification').addClass(code).text(message).appendTo('.notifications');
-}
-
-function mandatory_enlightenment(event)
-{
-    event.preventDefault();
-
-    if (! confirm('Are you sure? Forced enlightenment is usually not fully appreciated after 5pm.')) {
-        return;
-    }
-
-    // Determine form of enlightenment: 10% chance of 52 B'VO!
-    var song = '';
-    if (Math.random() <= 0.10) {
-        song = "http://musicbrainz.i.bolkhuis.nl/plugin/file/files/browse/Uploads/Tagged/Alice+Cooper/A+Fistful+of+Alice/Poison.mp3";
-    }
-    else {
-        song = "http://musicbrainz.i.bolkhuis.nl/plugin/file/files/browse/Misc/Christiaan/David+Hasselhoff+-+True+Survivor.mp3";
-    }
-
-    // Get current song
-    $.ajax({
-        type: 'GET',
-        url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/current',
-        dataType: 'json',
-        contentType: 'application/json',
-        success: function(result) {
-            // Determine if there's music playing (the playlist is not empty)
-            if (! $.isEmptyObject(result)) {
-                // Prepend song to current song
-                $.ajax({
-                    type: 'POST',
-                    url: result.url+'?access_token='+window.access_token,
-                    dataType: 'JSON',
-                    data: JSON.stringify({uri: song}),
-                    success: function() {
-                        // Press previous
-                        send_ajax('POST', '/current', {action: 'previous'});
-                    },
-                });
-            }
-            else {
-                // Append song to playlist
-                $.ajax({
-                    type: 'POST',
-                    url: 'http://musicbrainz.i.bolkhuis.nl/player/mjs/mp3soos/playlist?access_token='+window.access_token,
-                    dataType: 'JSON',
-                    data: JSON.stringify({uri: song}),
-                    success: function() {
-                        // Press play
-                        send_ajax('PUT', '/status', {status: 'playing'});
-                    },
-                });
-            }
-        },
-    });
 }
